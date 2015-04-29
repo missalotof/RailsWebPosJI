@@ -1,0 +1,47 @@
+
+</head>
+<body>
+<div class="product_list">
+    <div class="product_list_name">
+        购物清单
+    </div>
+    <table id="add_table">
+      <tr>
+        <td id="h1">分类</td>
+        <td id="h2">名称</td>
+        <td id="h3">单价(元)</td>
+        <td id="h4">单位</td>
+        <td id="h5">数量</td>
+        <td id="h6">小计</td>
+        <% @showShopList.each do |item| %>
+            <% if item.freeCount < 0 %>
+              <tr>
+                <th><%= item.classfy %></th>
+                <th><%= item.name %></th>
+                <th><%= item.price %></th>
+                <th><%= item.unit %></th>
+                <th><button><%= link_to '- ','/home/minusBtn?id='+item.id.to_s %></button><%= item.count %><button><%= link_to '+','/home/addBtn?id='+item.id.to_s %></button></th>
+                <th><%= item.count*item.price %></th>
+              </tr>
+          <% else %>
+              <tr>
+                <th><%= item.classfy %></th>
+                <th><%= item.name %></th>
+                <th><%= item.price %></th>
+                <th><%= item.unit %></th>
+                <th><button><%= link_to '-','/home/minusBtn?id='+item.id.to_s %></button><%= item.count %><button><%= link_to '+','/home/addBtn?id='+item.id.to_s %></button></th>
+                <th><%= ((item.count-(item.count/3).to_i)*item.price).to_s+'元(原价：'+(item.count*item.price).to_s+'元)' %></th>
+              </tr>
+          <% end %>
+      <% end %>
+    </table>
+    <div class="sum">总计：<%= @all_sum %>元</div>
+  <button style="margin-left: 77%;margin-top:50px;font-size: 20px;border-radius: 10px;background: rgb(14, 116, 175);color: #ffffff;"><%= link_to '付款','/home/payBtn?id='+'payBtn' %></button>
+</div>
+</body>
+</html>
+<script>
+    $(document).ready(function(){
+        LoadProductNum();
+    })
+</script>

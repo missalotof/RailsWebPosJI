@@ -1,0 +1,52 @@
+body
+{
+    margin: 0 ;
+    padding: 0;
+}
+.container{
+    width: 100%;
+}
+.navigation_back_ground{
+    margin: 0 auto;
+    padding: 0 auto;
+    background-color: rgb(35, 35, 35);
+}
+ａ{
+  text-decoration: none
+}
+ul li{
+    display: inline;
+    padding-left:10%;
+}
+ul li a{
+    font-size: 2vw;
+    color:rgb(153, 153, 144);
+    text-decoration:none;
+}
+ul li a:hover{
+    background:black;
+}
+a:hover {
+    color: white;
+}
+img{
+    height:25px;
+    width:25px;
+    color: rgb(153, 153, 144);
+}
+img:hover{
+    color: #ffffff;
+}
+.sum{
+    position: absolute;
+    margin-left: 75%;
+    margin-top: 1px;
+}
+#payBtn{
+    margin-left: 77%;
+    margin-top:50px;
+    font-size: 20px;
+    border-radius: 10px;
+    background: rgb(14, 116, 175);
+    color: #ffffff;
+}

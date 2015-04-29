@@ -1,0 +1,31 @@
+
+<body>
+<div class="product_list">
+    <div class="product_list_name">
+        商品列表
+    </div>
+    <table id="add_table">
+      <tr class="list_header">
+        <th id="h1">分类</th>
+        <th id="h2">名称</th>
+        <th id="h3">单价(元)</th>
+        <th id="h4">单位</th>
+        <th id="h5"></th>
+        <% @list.each  do |product| %>
+          <tr>
+            <th><%= product.classfy %></th>
+            <th><%= product.name %></th>
+            <th><%= product.price %></th>
+            <th><%= product.unit %></th>
+            <th><button><%= link_to '加入购物车','/home/clickBtnToAdd?id='+product.id.to_s %></button></th>
+          </tr>
+      <% end %>
+    </table>
+</div>
+</body>
+<script>
+   $(document).ready(function()
+    {
+        LoadProductNum();
+    })
+</script>
