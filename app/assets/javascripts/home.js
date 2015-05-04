@@ -9,22 +9,21 @@ function loadShoppingCart(id)
 }
 function reduce_goods(id)
 {
-    $.get('get_goods?id='+id,function(data){
-        //if(data[0]===0){
-        //    var new_id='#'+id+'tr_id';
-        // $(new_id).css({
-        //     "display":"none"
-        // })
-        //}
-
+    $.get('get_goods_min?id='+id,function(data){
+        if(data[0] == 0){
+            window.location = '/home/shopping_cart'
+        }
+        if(data[3] == 0){
+            window.location = '/home/product_list'
+        }
+        else {
             var new_id = '#' + id + 'count_id';
-            console.log(data)
             $(new_id)[0].value = data[0];
-            $('#'+id+'totle_id').text(data[1]);
-            $('#'+id+'pro_totle_id').text(data[1]+'元(原价：'+data[2]+ '元)');
+            $('#' + id + 'totle_id').text(data[2]);
+            $('#' + id + 'pro_totle_id').text(data[1] + '元(原价：' + data[2] + '元)');
             $('.shopping_test_name').text(data[3]);
-            $('#shop_list_sum').text('总计：'+data[4]+'元')
-
+            $('#shop_list_sum').text('总计：' + data[4] + '元')
+        }
     })
 }
 function add_goods(id)
@@ -32,9 +31,11 @@ function add_goods(id)
     $.get('get_goods_add?id='+id,function(data){
             $('.shopping_test_name').text(data[3]);
             $('#' + id + 'count_id')[0].value = data[0];
-            $('#'+id+'totle_id').text(data[1]);
+            $('#'+id+'totle_id').text(data[2]);
             $('#'+id+'pro_totle_id').text(data[1]+'元(原价：'+data[2]+ '元)');
             $('#shop_list_sum').text('总计：'+data[4]+'元')
     })
 
 }
+
+

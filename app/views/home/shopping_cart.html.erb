@@ -23,28 +23,27 @@
         <td id="h6">小计</td>
         <% @showShopList.each do |item| %>
             <% if item.freeCount < 0 %>
-              <tr id = "<%= item.id %>tr_id">
+              <tr id = "<%= item.id %>tr_id" class="bbb">
                 <th><%= item.classfy %></th>
                 <th><%= item.name %></th>
                 <th><%= item.price %></th>
                 <th><%= item.unit %></th>
-                <th><button id = "<%= item.id %>" onclick = "reduce_goods(this.id)">-</button><input id = "<%= item.id %>count_id" value = <%= item.count.to_i %>><button id = "<%= item.id %>" onclick = "add_goods(this.id)">+</button></th>
+                <th><button id = "<%= item.id %>" onclick = "reduce_goods(this.id)">-</button><input style="text-align: center" id = "<%= item.id %>count_id" value = <%= item.count.to_i %>><button id = "<%= item.id %>" onclick = "add_goods(this.id)">+</button></th>
                 <th id = "<%= item.id %>totle_id"><%= (item.count*item.price).to_s %></th>
               </tr>
           <% else %>
-              <tr id = "<%= item.id %>tr_id">
+              <tr id = "<%= item.id %>tr_id" class="bbb">
                 <th><%= item.classfy %></th>
                 <th><%= item.name %></th>
                 <th><%= item.price %></th>
                 <th><%= item.unit %></th>
-                <th><button id = "<%= item.id %>" onclick="reduce_goods(this.id)">-</button><input id = "<%= item.id %>count_id" value = <%= item.count.to_i %>><button id = "<%= item.id %>" onclick = "add_goods(this.id)">+</button></th>
+                <th><button id = "<%= item.id %>" onclick="reduce_goods(this.id)">-</button><input style="text-align: center" id = "<%= item.id %>count_id" value = <%= item.count.to_i %>><button id = "<%= item.id %>" onclick = "add_goods(this.id)">+</button></th>
                 <th id = "<%= item.id %>pro_totle_id"><%= ((item.count-(item.count/3).to_i)*item.price).to_s+'元(原价：'+(item.count*item.price).to_s+'元)' %></th>
               </tr>
           <% end %>
       <% end %>
     </table>
     <div class="sum" id="shop_list_sum">总计：<%= @all_sum %>元</div>
-  <button style="margin-left: 77%;margin-top:50px;font-size: 20px;border-radius: 10px;background: rgb(14, 116, 175);color: #ffffff;"><%= link_to '付款','/home/payBtn?id='+'payBtn' %></button>
+  <button id="payBtn" type="button" onclick="window.location.href='/home/pay_list'">付款</button>
 </div>
 </body>
-</html>
