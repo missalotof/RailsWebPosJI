@@ -1,5 +1,15 @@
 
 <body>
+<div class="container">
+  <ul class="navigation_back_ground">
+    <li><%= link_to "Let's Go","/home/index" %></li>
+    <li><%= link_to "主页","/home/index" %></li>
+    <li><%= link_to "商品列表","/home/product_list" %></li>
+    <li><a href="/home/shopping_cart.html">
+      <%= image_tag("shopping71.png") %><span id="shoppingCartNumShow"><span>购物车(</span><span class="shopping_test_name"><%= @num_sum %></span>)</span>
+    </a></li>
+  </ul>
+</div>
 <div class="product_list">
     <div class="product_list_name">
         商品列表
@@ -17,15 +27,9 @@
             <th><%= product.name %></th>
             <th><%= product.price %></th>
             <th><%= product.unit %></th>
-            <th><button><%= link_to '加入购物车','/home/clickBtnToAdd?id='+product.id.to_s %></button></th>
+            <th><button id = "<%= product.id %>" onclick = "loadShoppingCart(this.id)">加入购物车</button></th>
           </tr>
       <% end %>
     </table>
 </div>
 </body>
-<script>
-   $(document).ready(function()
-    {
-        LoadProductNum();
-    })
-</script>

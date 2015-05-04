@@ -10,6 +10,11 @@ Rails.application.routes.draw do
   get 'home/payBtn' => 'home#payBtn'
   get 'home/truePayBtn' => 'home#truePayBtn'
   get '/getListNumSum' => 'home#get_shop_list_num'
+  get 'home/addShoppingItem' => 'home#get_shop_lists_num'
+  # get  'home/get_goods' => 'home#get_shop_lists_num'
+  get 'home/get_goods'=> 'home#minusBtn'
+  get 'home/get_goods_add'=>'home#addBtn'
+  # get '/get_goods_add' => 'home#get_shop_lists_num'
   #post 'minusBtnAjax' => 'home#minusBtn'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

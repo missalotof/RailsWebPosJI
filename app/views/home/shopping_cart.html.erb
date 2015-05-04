@@ -1,6 +1,14 @@
-
-</head>
 <body>
+<div class="container">
+  <ul class="navigation_back_ground">
+    <li><%= link_to "Let's Go","/home/index" %></li>
+    <li><%= link_to "主页","/home/index" %></li>
+    <li><%= link_to "商品列表","/home/product_list" %></li>
+    <li><a href="/home/shopping_cart.html">
+      <%= image_tag("shopping71.png") %><span id="shoppingCartNumShow"><span>购物车(</span><span class="shopping_test_name"><%= @num_sum %></span>)</span>
+    </a></li>
+  </ul>
+</div>
 <div class="product_list">
     <div class="product_list_name">
         购物清单
@@ -15,33 +23,28 @@
         <td id="h6">小计</td>
         <% @showShopList.each do |item| %>
             <% if item.freeCount < 0 %>
-              <tr>
+              <tr id = "<%= item.id %>tr_id">
                 <th><%= item.classfy %></th>
                 <th><%= item.name %></th>
                 <th><%= item.price %></th>
                 <th><%= item.unit %></th>
-                <th><button><%= link_to '- ','/home/minusBtn?id='+item.id.to_s %></button><%= item.count %><button><%= link_to '+','/home/addBtn?id='+item.id.to_s %></button></th>
-                <th><%= item.count*item.price %></th>
+                <th><button id = "<%= item.id %>" onclick = "reduce_goods(this.id)">-</button><input id = "<%= item.id %>count_id" value = <%= item.count.to_i %>><button id = "<%= item.id %>" onclick = "add_goods(this.id)">+</button></th>
+                <th id = "<%= item.id %>totle_id"><%= (item.count*item.price).to_s %></th>
               </tr>
           <% else %>
-              <tr>
+              <tr id = "<%= item.id %>tr_id">
                 <th><%= item.classfy %></th>
                 <th><%= item.name %></th>
                 <th><%= item.price %></th>
                 <th><%= item.unit %></th>
-                <th><button><%= link_to '-','/home/minusBtn?id='+item.id.to_s %></button><%= item.count %><button><%= link_to '+','/home/addBtn?id='+item.id.to_s %></button></th>
-                <th><%= ((item.count-(item.count/3).to_i)*item.price).to_s+'元(原价：'+(item.count*item.price).to_s+'元)' %></th>
+                <th><button id = "<%= item.id %>" onclick="reduce_goods(this.id)">-</button><input id = "<%= item.id %>count_id" value = <%= item.count.to_i %>><button id = "<%= item.id %>" onclick = "add_goods(this.id)">+</button></th>
+                <th id = "<%= item.id %>pro_totle_id"><%= ((item.count-(item.count/3).to_i)*item.price).to_s+'元(原价：'+(item.count*item.price).to_s+'元)' %></th>
               </tr>
           <% end %>
       <% end %>
     </table>
-    <div class="sum">总计：<%= @all_sum %>元</div>
+    <div class="sum" id="shop_list_sum">总计：<%= @all_sum %>元</div>
   <button style="margin-left: 77%;margin-top:50px;font-size: 20px;border-radius: 10px;background: rgb(14, 116, 175);color: #ffffff;"><%= link_to '付款','/home/payBtn?id='+'payBtn' %></button>
 </div>
 </body>
 </html>
-<script>
-    $(document).ready(function(){
-        LoadProductNum();
-    })
-</script>
