@@ -1,14 +1,4 @@
 <body>
-<div class="container">
-  <ul class="navigation_back_ground">
-    <li><%= link_to "Let's Go","/home/index" %></li>
-    <li><%= link_to "主页","/home/index" %></li>
-    <li><%= link_to "商品列表","/home/product_list" %></li>
-    <li><a href="/home/shopping_cart.html">
-      <%= image_tag("shopping71.png") %><span id="shoppingCartNumShow"><span>购物车(</span><span class="shopping_test_name"><%= @num_sum %></span>)</span>
-    </a></li>
-  </ul>
-</div>
 <div class="product_list">
     <div class="product_list_name">
         购物清单
@@ -28,7 +18,7 @@
                 <th><%= item.name %></th>
                 <th><%= item.price %></th>
                 <th><%= item.unit %></th>
-                <th><button id = "<%= item.id %>" onclick = "reduce_goods(this.id)">-</button><input style="text-align: center" id = "<%= item.id %>count_id" value = <%= item.count.to_i %>><button id = "<%= item.id %>" onclick = "add_goods(this.id)">+</button></th>
+                <th><button id = "<%= item.id %>" onclick = "reduce_goods(this.id)">-</button><input readonly="readonly" style="text-align: center" id = "<%= item.id %>count_id" value = <%= item.count.to_i %>><button id = "<%= item.id %>" onclick = "add_goods(this.id)">+</button></th>
                 <th id = "<%= item.id %>totle_id"><%= (item.count*item.price).to_s %></th>
               </tr>
           <% else %>
@@ -37,7 +27,7 @@
                 <th><%= item.name %></th>
                 <th><%= item.price %></th>
                 <th><%= item.unit %></th>
-                <th><button id = "<%= item.id %>" onclick="reduce_goods(this.id)">-</button><input style="text-align: center" id = "<%= item.id %>count_id" value = <%= item.count.to_i %>><button id = "<%= item.id %>" onclick = "add_goods(this.id)">+</button></th>
+                <th><button id = "<%= item.id %>" onclick="reduce_goods(this.id)">-</button><input readonly="readonly" style="text-align: center" id = "<%= item.id %>count_id" value = <%= item.count.to_i %>><button id = "<%= item.id %>" onclick = "add_goods(this.id)">+</button></th>
                 <th id = "<%= item.id %>pro_totle_id"><%= ((item.count-(item.count/3).to_i)*item.price).to_s+'元(原价：'+(item.count*item.price).to_s+'元)' %></th>
               </tr>
           <% end %>

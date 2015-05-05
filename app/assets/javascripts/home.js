@@ -11,7 +11,8 @@ function reduce_goods(id)
 {
     $.get('get_goods_min?id='+id,function(data){
         if(data[0] == 0){
-            window.location = '/home/shopping_cart'
+            var list_id = '#' + id + 'tr_id';
+            $(list_id).remove();
         }
         if(data[3] == 0){
             window.location = '/home/product_list'

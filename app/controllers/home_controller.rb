@@ -34,16 +34,18 @@ class HomeController < ApplicationController
 
   def clickBtnToAdd
     shopping = Myallitem.find_by_id(params[:id])
-    cart = Myshoppinglist.find_by_name(shopping.name)
     shoplist = Myshoppinglist.new
+    cart = Myshoppinglist.find_by_name(shopping.name)
     if cart
       last_count=cart.count
       cart.count = last_count +1
       cart.allsum = cart.price*cart.count
+      cart.save
       if Mypromotion.find_by_barcode(cart.barcode)
         cart.freeCount =  (cart.count/3).to_i
+        cart.save
       end
-      cart.save
+
     else
       if Mypromotion.find_by_barcode(shopping.barcode)
         shoplist.classfy = shopping.classfy
@@ -94,7 +96,6 @@ class HomeController < ApplicationController
     respond_to do |format|
       format.json { render json: @data  }
       end
-
   end
 
   def get_shop_lists_num
@@ -106,7 +107,7 @@ class HomeController < ApplicationController
       @num_sum += bl.count
       @count = bl.count
     end
-    @data=[@num_sum,@count]
+    @data = [@num_sum,@count]
     respond_to do |format|
       format.json { render json: @data  }
       format.js
@@ -117,7 +118,7 @@ class HomeController < ApplicationController
     if Myshoppinglist.find_by_id(params[:id])
       minBtn = Myshoppinglist.find_by_id(params[:id])
       minBtn.count=minBtn.count-1
-      minBtn.save
+      # minBtn.save
       minBtn.allsum = minBtn.count*minBtn.price
       minBtn.save
       if Mypromotion.find_by_barcode(minBtn.barcode)
@@ -133,18 +134,19 @@ class HomeController < ApplicationController
         minBtn.delete
 
       end
+
       if all_item_sum == 0
-        @data=[3,1,2,0,4]
-        respond_to do |format|
-          format.json { render json: @data }
-        end
+        @data = [3,1,2,0,4]
+        # respond_to do |format|
+        #   format.json { render json: @data }
+        # end
       else
         if minBtn.count <= 0
           minBtn.delete
           @data=[0,1,2,3,4]
-          respond_to do |format|
-            format.json { render json: @data }
-          end
+          # respond_to do |format|
+          #   format.json { render json: @data }
+          # end
         else
           item = Myshoppinglist.find_by_id(params[:id])
           @count = item.count
@@ -159,25 +161,19 @@ class HomeController < ApplicationController
             @all_sum +=  bl.price * bl.count.to_i
           end
           @data=[@count,@item_pro_sum,@item_sum,@num_sum,@all_sum]
-          respond_to do |format|
-            format.json { render json: @data  }
-          end
         end
-
       end
-
+      respond_to do |format|
+        format.json { render json: @data  }
     end
-  end
+    end
 
-  def payBtn
-    redirect_to :pay_list
   end
 
   def truePayBtn
     Myshoppinglist.all.delete_all
     Myfreelist.all.delete_all
     redirect_to :product_list
-
   end
 
   def get_shop_list_num
@@ -201,7 +197,7 @@ class HomeController < ApplicationController
 
   def showFreeList
     if
-    promotionBar = Promotionlist.all
+    promotionBar = Mypromotion.all
       promotionBar.each do |item|
         if Myshoppinglist.find_by_barcode(item.barcode)
         promotionItem = Myshoppinglist.find_by_barcode(item.barcode)
