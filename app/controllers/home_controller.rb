@@ -24,6 +24,12 @@ class HomeController < ApplicationController
     shoplist = Myshoppinglist.new
     cart = Myshoppinglist.find_by_name(shopping.name)
     Myshoppinglist.addItemToCart(cart,shoplist,shopping)
+    @data = Myshoppinglist.returnItemAllSum
+    respond_to do |format|
+      format.json { render json: @data  }
+      format.js
+      end
+
   end
 
   def addBtn
@@ -33,22 +39,6 @@ class HomeController < ApplicationController
     respond_to do |format|
       format.json { render json: @data  }
       end
-  end
-
-  def get_shop_lists_num
-    clickBtnToAdd
-    @buyList = Myshoppinglist.all
-    @num_sum = 0
-    @count = 0
-    @buyList.each do |bl|
-      @num_sum += bl.count
-      @count = bl.count
-    end
-    @data = [@num_sum,@count]
-    respond_to do |format|
-      format.json { render json: @data  }
-      format.js
-    end
   end
 
   def minusBtn
