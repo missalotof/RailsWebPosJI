@@ -38,14 +38,7 @@ function add_goods(id)
     })
 
 }
-//function pay_button(id)
-//{
-//    $.get('click_to_pay?id='+id,function(data){
-//        if(data = false){
-//            window.location = 'home/pay_list'
-//        }
-//    })
-//
-//}
+
+
 
 

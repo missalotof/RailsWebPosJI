@@ -4,13 +4,12 @@ Rails.application.routes.draw do
   get '/home/product_list' => 'home#product_list',:as=>"product_list"
   get '/home/shopping_cart' => 'home#shopping_cart',:as=>"shopping_cart"
   get '/home/pay_list' => 'home#pay_list',:as=>"pay_list"
-  # get '/home/clickBtnToAdd' => 'home#clickBtnToAdd'
-  get 'home/addBtn' => 'home#addBtn'
-  get 'home/minusBtn' => 'home#minusBtn'
-  get 'home/truePayBtn' => 'home#truePayBtn'
-  get 'home/addShoppingItem' => 'home#clickBtnToAdd'
-  get 'home/get_goods_min'=> 'home#minusBtn'
-  get 'home/get_goods_add'=>'home#addBtn'
+  get 'home/addBtn' => 'home#addItemBtn'
+  get 'home/minusBtn' => 'home#minusItemBtn'
+  get 'home/truePayBtn' => 'home#payListsPayBtn'
+  get 'home/addShoppingItem' => 'home#clickBtnToAddItem'
+  get 'home/get_goods_min'=> 'home#minusItemBtn'
+  get 'home/get_goods_add'=>'home#addItemBtn'
   # get 'home/click_to_pay'=>'home#showFreeList'
   # get 'home/truePayBtn'=>'home#truePayBtn'
   # The priority is based upon order of creation: first created -> highest priority.

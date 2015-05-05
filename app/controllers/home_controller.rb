@@ -19,58 +19,32 @@ class HomeController < ApplicationController
     @freeList = Mypromotion.showFreeList
   end
 
-  def clickBtnToAdd
-    shopping = Myallitem.find_by_id(params[:id])
-    shoplist = Myshoppinglist.new
-    cart = Myshoppinglist.find_by_name(shopping.name)
-    Myshoppinglist.addItemToCart(cart,shoplist,shopping)
+  def clickBtnToAddItem
+    Myshoppinglist.addItemToCart(params[:id])
     @data = Myshoppinglist.returnItemAllSum
     respond_to do |format|
       format.json { render json: @data  }
       format.js
       end
-
   end
-
-  def addBtn
-    addItem = Myshoppinglist.find_by_id(params[:id])
-    Myshoppinglist.accumulateCartNum(addItem)
-    @data = Myshoppinglist.returnItemProperty(addItem)
+  def addItemBtn
+    Myshoppinglist.accumulateCartNum(params[:id])
+    @data = Myshoppinglist.returnItemProperty(params[:id])
     respond_to do |format|
       format.json { render json: @data  }
       end
   end
 
-  def minusBtn
+  def minusItemBtn
     if Myshoppinglist.find_by_id(params[:id])
-      minBtn = Myshoppinglist.find_by_id(params[:id])
-      Myshoppinglist.regressiveCartNum(minBtn)
-      @remove_turn_to = Myshoppinglist.all
-      all_item_sum = 0
-      @remove_turn_to.each do |item|
-        all_item_sum += item.count
-      end
-      if minBtn.count <= 0
-        minBtn.delete
-      end
-      if all_item_sum == 0
-        @data = [3,1,2,0,4,5]
-      else
-        if minBtn.count <= 0
-          minBtn.delete
-          @data=[0,1,2,3,4,5]
-        else
-          item = Myshoppinglist.find_by_id(params[:id])
-          @data = Myshoppinglist.returnItemProperty(item)
-        end
-      end
+    @data = Myshoppinglist.return_data(params[:id])
       respond_to do |format|
         format.json { render json: @data  }
     end
     end
   end
 
-  def truePayBtn
+  def payListsPayBtn
     Myshoppinglist.all.delete_all
     Myfreelist.all.delete_all
     redirect_to :product_list
