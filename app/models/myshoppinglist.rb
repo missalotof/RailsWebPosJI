@@ -43,4 +43,39 @@ def self.addNewCartItem(shoplist,item)
   shoplist.barcode = item.barcode
   shoplist.save
 end
+
+def self.returnItemProperty(item)
+  count = item.count
+  item_sum = item.price*item.count
+  item_pro_sum = item.price*(item.count - (item.count/3).to_i).to_i
+  buyList = Myshoppinglist.all
+  all_sum = 0
+  num_sum = 0
+  free_sum = 0
+  buyList.each do |bl|
+    num_sum += bl.count
+    all_sum +=  bl.price * bl.count.to_i
+    if bl.freeCount >= 0
+      free_sum += bl.price * (bl.count/3).to_i
+    end
+  end
+  @data = [count,item_pro_sum,item_sum,num_sum,all_sum,free_sum]
+  return @data
+end
+
+def self.returnItemAllSum
+  buyList = Myshoppinglist.all
+  all_sum = 0
+  num_sum = 0
+  free_sum = 0
+  buyList.each do |bl|
+    num_sum += bl.count
+    all_sum +=  bl.price * bl.count.to_i
+    if bl.freeCount >= 0
+      free_sum += bl.price * (bl.count/3).to_i
+    end
+  end
+  @data = [num_sum,all_sum,free_sum]
+  return @data
+  end
 end

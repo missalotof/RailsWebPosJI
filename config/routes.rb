@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'home/addShoppingItem' => 'home#get_shop_lists_num'
   get 'home/get_goods_min'=> 'home#minusBtn'
   get 'home/get_goods_add'=>'home#addBtn'
+  # get 'home/click_to_pay'=>'home#showFreeList'
   # get 'home/truePayBtn'=>'home#truePayBtn'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

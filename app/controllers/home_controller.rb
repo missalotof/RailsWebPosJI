@@ -1,35 +1,22 @@
 class HomeController < ApplicationController
   def index
-    num_show
+    @data = Myshoppinglist.returnItemAllSum
   end
 
   def product_list
     @list = Myallitem.all
-    num_show
+    @data = Myshoppinglist.returnItemAllSum
   end
 
   def shopping_cart
     @showShopList = Myshoppinglist.all
-    get_shop_list_num
-    num_show
+    @data = Myshoppinglist.returnItemAllSum
   end
 
   def pay_list
     @showPayShopList = Myshoppinglist.all
-    get_shop_list_num
-    showFreeList
-    num_show
-  end
-
-  def num_show
-    @buyList = Myshoppinglist.all
-    @num_sum = 0
-    @count = 0
-    @buyList.each do |bl|
-      @num_sum += bl.count
-      @count = bl.count
-    end
-    @num_sum = @num_sum.to_i
+    @data = Myshoppinglist.returnItemAllSum
+    @freeList = Mypromotion.showFreeList
   end
 
   def clickBtnToAdd
@@ -42,20 +29,7 @@ class HomeController < ApplicationController
   def addBtn
     addItem = Myshoppinglist.find_by_id(params[:id])
     Myshoppinglist.accumulateCartNum(addItem)
-    item = Myshoppinglist.find_by_id(params[:id])
-    @count = item.count
-    @item_sum = item.price*item.count
-    @item_pro_sum = item.price*(item.count - (item.count/3).to_i).to_i
-    @buyList = Myshoppinglist.all
-    @all_sum = 0
-    @num_sum = 0
-    @promotion_sum = 0
-    @buyList.each do |bl|
-      @num_sum += bl.count
-      @all_sum +=  bl.price * bl.count.to_i
-    end
-    @data=[@count,@item_pro_sum,@item_sum,@num_sum,@all_sum]
-    p @data
+    @data = Myshoppinglist.returnItemProperty(addItem)
     respond_to do |format|
       format.json { render json: @data  }
       end
@@ -90,32 +64,20 @@ class HomeController < ApplicationController
         minBtn.delete
       end
       if all_item_sum == 0
-        @data = [3,1,2,0,4]
+        @data = [3,1,2,0,4,5]
       else
         if minBtn.count <= 0
           minBtn.delete
-          @data=[0,1,2,3,4]
+          @data=[0,1,2,3,4,5]
         else
           item = Myshoppinglist.find_by_id(params[:id])
-          @count = item.count
-          @item_sum = item.price*item.count
-          @item_pro_sum = item.price*(item.count - (item.count/3).to_i).to_i
-          @buyList = Myshoppinglist.all
-          @all_sum = 0
-          @num_sum = 0
-          @promotion_sum = 0
-          @buyList.each do |bl|
-            @num_sum += bl.count
-            @all_sum +=  bl.price * bl.count.to_i
-          end
-          @data=[@count,@item_pro_sum,@item_sum,@num_sum,@all_sum]
+          @data = Myshoppinglist.returnItemProperty(item)
         end
       end
       respond_to do |format|
         format.json { render json: @data  }
     end
     end
-
   end
 
   def truePayBtn
@@ -123,49 +85,6 @@ class HomeController < ApplicationController
     Myfreelist.all.delete_all
     redirect_to :product_list
   end
-
-  def get_shop_list_num
-    @buyList = Myshoppinglist.all
-    @all_sum = 0
-    @free_sum = 0
-    @num_sum = 0
-    @buyList.each do |bl|
-      @num_sum += bl.count
-      @all_sum +=  bl.price * bl.count.to_i
-      if bl.freeCount >= 0
-        @free_sum += bl.price * (bl.count/3).to_i
-      end
-    end
-    respond_to do |format|
-      format.html {}
-      format.json { render :json => @num_sum.to_json }
-      format.js
-    end
-  end
-
-  def showFreeList
-    if
-    promotionBar = Mypromotion.all
-      promotionBar.each do |item|
-        if Myshoppinglist.find_by_barcode(item.barcode)
-        promotionItem = Myshoppinglist.find_by_barcode(item.barcode)
-        cart = Myfreelist.find_by_name(promotionItem.name)
-        if cart
-          cart.freeCount = (promotionItem.count/3).to_i
-          cart.save
-        else
-          showPromotionItem = Myfreelist.new
-          showPromotionItem.classfy = promotionItem.classfy
-          showPromotionItem.name = promotionItem.name
-          showPromotionItem.freeCount = (promotionItem.count/3).to_i
-          showPromotionItem.save
-        end
-
-      end
-    end
-    end
-    @freeList = Myfreelist.all
-    end
 
 end
 
